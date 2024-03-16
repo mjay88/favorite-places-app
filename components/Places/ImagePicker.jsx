@@ -9,26 +9,7 @@ import { useState } from "react";
 import { Colors } from "../../constants/colors";
 import OutlineButton from "../UI/OutlineButton";
 
-function ImagePicker() {
-	const imageObject = {
-		assets: [
-			{
-				assetId: null,
-				base64: null,
-				duration: null,
-				exif: null,
-				fileName: null,
-				filesize: null,
-				height: 540,
-				mimeType: "image/jpeg",
-				rotation: null,
-				type: "image",
-				uri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252Fusing-native-device-features-demo-app-1b2956ed-4325-4720-aedd-4586fea925c9/ImagePicker/05efd3c8-d60f-475e-b896-ca44016685a6.jpeg",
-				width: 960,
-			},
-		],
-		canceled: false,
-	};
+function ImagePicker({ onTakeImage }) {
 	const [pickedImage, setPickedImage] = useState();
 
 	const [cameraPermissionInformation, requestPermission] =
@@ -66,6 +47,7 @@ function ImagePicker() {
 		});
 		console.log(image.assets[0].uri, "image object");
 		setPickedImage(image.assets[0].uri);
+		onTakeImage(image.assets[0].uri);
 	}
 
 	let imagePreview = <Text>No image taken yet.</Text>;
@@ -95,6 +77,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		backgroundColor: Colors.primary100,
 		borderRadius: 4,
+		overflow: "hidden",
 	},
 	image: {
 		width: "100%",
