@@ -7,6 +7,7 @@ import {
 import { useState } from "react";
 
 import { Colors } from "../../constants/colors";
+import OutlineButton from "../UI/OutlineButton";
 
 function ImagePicker() {
 	const imageObject = {
@@ -76,7 +77,9 @@ function ImagePicker() {
 	return (
 		<View>
 			<View style={styles.imagePreview}>{imagePreview}</View>
-			<Button title="Take Image" onPress={takeImageHandler} />
+			<OutlineButton icon="camera" onPress={takeImageHandler}>
+				Take Image
+			</OutlineButton>
 		</View>
 	);
 }
