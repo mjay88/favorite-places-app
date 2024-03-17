@@ -25,6 +25,9 @@ function PlaceForm({ onCreatePlace }) {
 	}, []);
 
 	function savePlaceHandler() {
+		console.log("enteredTitle:", enteredTitle);
+		console.log("selectedImage:", selectedImage);
+		console.log("pickedLocation:", pickedLocation);
 		const placeData = new Place(enteredTitle, selectedImage, pickedLocation);
 		onCreatePlace(placeData);
 	}

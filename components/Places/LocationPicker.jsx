@@ -85,7 +85,7 @@ const LocationPicker = ({ onPickLocation }) => {
 	function pickOnMapHandler() {
 		navigation.navigate("Map");
 	}
-
+	console.log("firing");
 	let locationPreview = <Text>No Location Picked Yet</Text>;
 
 	if (pickedLocation) {

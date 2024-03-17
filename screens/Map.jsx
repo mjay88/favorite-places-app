@@ -3,17 +3,22 @@ import { Alert, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import IconButton from "../components/UI/IconButton";
 
-const Map = ({ navigation }) => {
-	const [selectedLocation, setSelectedLocation] = useState();
+const Map = ({ navigation, route }) => {
+	const initialLocation = route.params && {
+		lat: route.params.initialLat,
+		lng: route.params.initialLng,
+	};
+	const [selectedLocation, setSelectedLocation] = useState(initialLocation);
 
 	const region = {
-		latitude: 37.78825,
-		longitude: -122.4324,
+		latitude: initialLocation ? initialLocation.lat : 37.78825,
+		longitude: initialLocation ? initialLocation.lng : -122.4324,
 		latitudeDelta: 0.0922,
 		longitudeDelta: 0.0421,
 	};
 
 	function selectLocationHandler(event) {
+		if (initialLocation) return;
 		const lat = event.nativeEvent.coordinate.latitude;
 		const lng = event.nativeEvent.coordinate.longitude;
 		setSelectedLocation({ lat: lat, lng: lng });
@@ -36,6 +41,7 @@ const Map = ({ navigation }) => {
 	//since we are in the map component function, and we are relying on the map components state, we should set our header options to add the header button from inside this component (the map component)
 
 	useLayoutEffect(() => {
+		if (initialLocation) return;
 		navigation.setOptions({
 			headerRight: ({ tintColor }) => (
 				<IconButton
@@ -46,7 +52,7 @@ const Map = ({ navigation }) => {
 				/>
 			),
 		});
-	}, [navigation, savePickedLocationHandler]);
+	}, [navigation, savePickedLocationHandler, initialLocation]);
 
 	return (
 		<MapView
